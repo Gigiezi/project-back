@@ -1,29 +1,54 @@
 import { Injectable } from "@nestjs/common";
 import { CreateMusicDto } from "./dto/create-music.dto";
 import { UpdateMusicDto } from "./dto/update-music.dto";
+import { InjectRepository } from "@nestjs/typeorm";
+import { Music } from "./entities/music.entity";
+import { Repository } from "typeorm";
 
 @Injectable()
 
 export class MusicRepository {
+    constructor(@InjectRepository(Music)
+    private musicRepository: Repository<Music>) { };
+
+    findAll() {
+        return this.musicRepository
+            .createQueryBuilder("music")
+            .getMany()
+    };
+
+    findOne(id: number) {
+        return this.musicRepository
+            .createQueryBuilder("music")
+            .where('music.id = :id', { id })
+            .getMany()
+    };
+
+    create(createMusicDto: CreateMusicDto) {
+        const newMusic = this.musicRepository.create(createMusicDto)
+
+        return this.musicRepository.save(newMusic);
+    };
+
+    async update(id: number, updateMusicDto: UpdateMusicDto) {
+        await this.musicRepository
+            .createQueryBuilder("music")
+            .update()
+            .set(updateMusicDto)
+            .where("music.id = :id", { id })
+            .execute()
+
+        return this.musicRepository.findOneBy({ id });
+    };
+
+    async remove(id: number) {
+        await this.musicRepository.softDelete(id)
+
+        return this.musicRepository
+            .createQueryBuilder('music')
+            .withDeleted()
+            .where("music.id = :id", { id })
+            .getOne()
+    };
     
-
-    findAll(){
-        return 'This Action Returns All Music';
-    };
-
-    findOne(id: number){
-        return `This Action Return One Music By ID #${id}`;
-    };
-
-    create(createMusicDto: CreateMusicDto){
-        return createMusicDto;
-    };
-
-    update(id: number, updateMusicDto: UpdateMusicDto){
-        return `This action updates a #${id} music`;
-    };
-
-    remove(id: number){
-        return `This action removes a #${id} music`;
-    };
 }
