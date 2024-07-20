@@ -30,6 +30,13 @@ export class AuthorRepository{
         .getMany()
     }
 
+    findByName(name: string){
+        return this.authorRepository
+        .createQueryBuilder("author")
+        .where('author.name Like :name', {name: `%${name}%`})
+        .getMany()
+    }
+
     async update(id: number, data: UpdateAuthorDto){
         await this.authorRepository
         .createQueryBuilder("author")
