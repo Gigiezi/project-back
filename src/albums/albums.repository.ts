@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Album } from "./entities/album.entity";
+import { AlbumEntity } from "./entities/album.entity";
 import { Repository } from "typeorm";
 import { CreateAlbumDto } from "./dto/create-album.dto";
 import { UpdateAlbumDto } from "./dto/update-album.dto";
@@ -8,12 +8,12 @@ import { UpdateAlbumDto } from "./dto/update-album.dto";
 @Injectable()
 export class albumsRepository {
     constructor(
-        @InjectRepository(Album)
-        private albumRepository: Repository<Album>
+        @InjectRepository(AlbumEntity)
+        private albumRepository: Repository<AlbumEntity>
     ){}
 
-    create(data: CreateAlbumDto){
-        const newAlbum = this.albumRepository.create(data)
+    async create(data: CreateAlbumDto){
+        newAlbum = this.albumRepository.create(data)
 
         return this.albumRepository.save(newAlbum)
     }
