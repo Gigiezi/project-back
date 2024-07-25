@@ -8,8 +8,8 @@ export class AlbumsService {
   constructor(private readonly albumsRepository: albumsRepository){}
 
 
-  create(createAlbumDto: CreateAlbumDto) {
-    return this.albumsRepository.create(createAlbumDto);
+  async create(createAlbumDto: CreateAlbumDto) {
+    return await this.albumsRepository.create(createAlbumDto);
   }
 
   findAll() {
@@ -20,11 +20,11 @@ export class AlbumsService {
     return this.albumsRepository.findOne(id);
   }
 
-  update(id: number, updateAlbumDto: UpdateAlbumDto) {
-    return this.albumsRepository.update(id, updateAlbumDto);
+  async update(id: number, updateAlbumDto: UpdateAlbumDto) {
+    return await this.albumsRepository.update(id, updateAlbumDto);
   }
 
-  remove(id: number) {
-    return this.albumsRepository.remove(id);
+  async remove(id: number) {
+    return await this.albumsRepository.remove(id);
   }
 }
