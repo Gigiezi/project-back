@@ -31,6 +31,13 @@ export class albumsRepository {
             .getMany()
     }
 
+    findByName(title:string){
+        return this.albumRepository
+        .createQueryBuilder("album")
+        .where('album.title Like :title', {title: `%${title}%`})
+        .getMany()
+    }
+
     async update(id: number, data: UpdateAlbumDto){
         await this.albumRepository.createQueryBuilder("album")
         .update()
