@@ -1,14 +1,14 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Author } from "./entities/author.entity";
+import { AuthorEntity } from "./entities/author.entity";
 import { Repository } from "typeorm";
 import { CreateAuthorDto } from "./dto/create-author.dto";
 import { UpdateAuthorDto } from "./dto/update-author.dto";
 
 @Injectable()
 export class AuthorRepository{
-    constructor(@InjectRepository(Author)
-                private authorRepository: Repository<Author>) 
+    constructor(@InjectRepository(AuthorEntity)
+                private authorRepository: Repository<AuthorEntity>) 
     {}
 
     create(data: CreateAuthorDto){
