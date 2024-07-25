@@ -8,8 +8,8 @@ export class AuthorsService {
 
   constructor(private readonly authorsRepository: AuthorRepository){}
 
-  create(createAuthorDto: CreateAuthorDto) {
-    return this.authorsRepository.create(createAuthorDto)
+  async create(createAuthorDto: CreateAuthorDto) {
+    return await this.authorsRepository.create(createAuthorDto)
   }
 
   findAll() {
@@ -20,11 +20,11 @@ export class AuthorsService {
     return this.authorsRepository.findOne(id)
   }
 
-  update(id: number, updateAuthorDto: UpdateAuthorDto) {
-    return this.authorsRepository.update(id, updateAuthorDto)
+  async update(id: number, updateAuthorDto: UpdateAuthorDto) {
+    return await this.authorsRepository.update(id, updateAuthorDto)
   }
 
-  remove(id: number) {
-    return this.authorsRepository.remove(id)
+  async remove(id: number) {
+    return await this.authorsRepository.remove(id)
   }
 }
